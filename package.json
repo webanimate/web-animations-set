@@ -1,0 +1,69 @@
+{
+  "name": "web-animations-set",
+  "version": "0.0.2",
+  "description": "Create, lint, format and test a set of web animations",
+  "main": "src/index.js",
+  "author": "Web Animate <60752454+webanimate@users.noreply.github.com>",
+  "license": "MIT",
+  "private": false,
+  "homepage": "https://github.com/webanimate/web-animations-set#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webanimate/web-animations-set.git"
+  },
+  "bin": "./src/cli.js",
+  "scripts": {
+    "c": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "fix": "yarn fix:eslint && yarn fix:prettier",
+    "fix:eslint": "eslint --fix \"**/*.*\"",
+    "fix:prettier": "prettier --write \"**/*.*\"",
+    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint:eslint": "eslint \"**/*.*\"",
+    "lint:prettier": "prettier --check \"**/*.*\"",
+    "test": "yarn fix && jest && yarn build",
+    "up": "yarn upgrade-interactive && ncu -i && yarn"
+  },
+  "dependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-html": "^6.1.0",
+    "eslint-plugin-json": "^2.1.2",
+    "prettier": "^2.1.2"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 11,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "html",
+      "json"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:json/recommended",
+      "prettier"
+    ]
+  },
+  "prettier": {
+    "printWidth": 280,
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  },
+  "keywords": [
+    "waapi",
+    "web",
+    "animations",
+    "api",
+    "web-animations-api",
+    "css",
+    "transitions"
+  ]
+}

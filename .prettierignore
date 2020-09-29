@@ -1,0 +1,22 @@
+.DS_Store
+.thumbs.db
+node_modules
+LICENSE
+coverage
+dist
+
+*.*
+!*.css
+!*.html
+!*.js
+!*.json
+!*.md
+!*.yml
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
