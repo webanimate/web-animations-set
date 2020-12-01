@@ -30,32 +30,6 @@
     "eslint-plugin-json": "^2.1.2",
     "prettier": "^2.1.2"
   },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es6": true,
-      "jest": true,
-      "node": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 11,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "html",
-      "json"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:json/recommended",
-      "prettier"
-    ]
-  },
-  "prettier": {
-    "printWidth": 280,
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true
   },
   "keywords": [
     "waapi",
