@@ -3,25 +3,47 @@
 const fs = require('fs')
 const path = require('path')
 const execa = require('execa')
+const testFiles = ['babel.config.js', 'index.test.js', 'jest.config.js']
 
-const onResponse = (response) => {
-  console.log(response)
-  // console.log(response.stdout)
+const copyTestFiles = () => {
+  testFiles.forEach((file) => {
+    fs.copyFileSync(path.join('.', 'node_modules', 'web-animations-set', 'src', file), file)
+  })
 }
 
-const onError = (error) => {
-  console.log(error)
-  console.log(error.stdout)
+const removeTestFiles = () => {
+  testFiles.forEach((file) => {
+    fs.rmSync(file)
+  })
 }
 
-fs.writeFileSync(path.join(process.cwd(), 'file.js'), `export default {\n\n}\n`)
+const onError = () => {}
 
-execa(path.join('.', 'node_modules', '.bin', 'eslint') + ' --fix "**/*.*" --resolve-plugins-relative-to . --ignore-path ' + path.join('.', 'node_modules', 'web-animations-set', 'src',  '.eslintignore') + ' --config ' + path.join('.', 'node_modules', 'web-animations-set', 'src', '.eslintrc.json')).then(
-  (response) => {
-    onResponse(response)
-    execa(path.join('.', 'node_modules', '.bin', 'prettier') + ' --write "**/*.*" -u --print-width 280 --no-semi --single-quote --ignore-path ' + path.join('.', 'node_modules', 'web-animations-set', 'src', '.prettierignore')).then(
-      (response) => {
-        onResponse(response)
+execa(
+  path.join('.', 'node_modules', '.bin', 'eslint') +
+    ' --fix "**/*.*" --resolve-plugins-relative-to . --ignore-path ' +
+    path.join('.', 'node_modules', 'web-animations-set', 'src', '.eslintignore') +
+    ' --config ' +
+    path.join('.', 'node_modules', 'web-animations-set', 'src', '.eslintrc.json'),
+  { stdio: 'inherit' }
+).then(
+  () => {
+    execa(
+      path.join('.', 'node_modules', '.bin', 'prettier') +
+        ' --write "**/*.*" -u --print-width 280 --no-semi --single-quote --ignore-path ' +
+        path.join('.', 'node_modules', 'web-animations-set', 'src', '.prettierignore'),
+      { stdio: 'inherit' }
+    ).then(
+      () => {
+        copyTestFiles()
+        execa(path.join('.', 'node_modules', '.bin', 'jest'), { stdio: 'inherit' }).then(
+          () => {
+            removeTestFiles()
+          },
+          () => {
+            removeTestFiles()
+          }
+        )
       },
       (error) => {
         onError(error)
