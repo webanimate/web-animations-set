@@ -21,17 +21,17 @@ const onError = () => {}
 
 execa(
   path.join('.', 'node_modules', '.bin', 'eslint') +
-    ' --fix "**/*.*" --resolve-plugins-relative-to . --ignore-path ' +
-    path.join('.', 'node_modules', 'web-animations-set', 'src', '.eslintignore') +
-    ' --config ' +
-    path.join('.', 'node_modules', 'web-animations-set', 'src', '.eslintrc.json'),
+  ' --fix "**/*.*" --resolve-plugins-relative-to . --ignore-path ' +
+  path.join('.', 'node_modules', 'web-animations-set', 'src', '.eslintignore') +
+  ' --config ' +
+  path.join('.', 'node_modules', 'web-animations-set', 'src', '.eslintrc.json'),
   { stdio: 'inherit' }
 ).then(
   () => {
     execa(
       path.join('.', 'node_modules', '.bin', 'prettier') +
-        ' --write "**/*.*" -u --print-width 280 --no-semi --single-quote --ignore-path ' +
-        path.join('.', 'node_modules', 'web-animations-set', 'src', '.prettierignore'),
+      ' --write "**/*.*" -u --print-width 280 --no-semi --single-quote --ignore-path ' +
+      path.join('.', 'node_modules', 'web-animations-set', 'src', '.prettierignore'),
       { stdio: 'inherit' }
     ).then(
       () => {
