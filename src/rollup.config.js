@@ -1,0 +1,19 @@
+import { terser } from 'rollup-plugin-terser'
+import * as pkg from './package.json'
+
+export default {
+  input: pkg.main,
+  output: {
+    file: `dist/${pkg.name.split('/').pop()}.js`,
+    format: 'umd',
+    name: pkg.outputName,
+    sourcemap: true,
+  },
+  plugins: [
+    terser({
+      output: {
+        preamble: `//${pkg.name} v${pkg.version} ${pkg.homepage}`,
+      },
+    }),
+  ],
+}

@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const execa = require('execa')
-const testFiles = ['babel.config.js', 'index.test.js', 'jest.config.js']
+const testFiles = ['babel.config.js', 'index.test.js', 'jest.config.js', 'rollup.config.js', 'rollup.config.split.js']
 
 const copyTestFiles = () => {
   testFiles.forEach((file) => {
@@ -38,7 +38,21 @@ execa(
         copyTestFiles()
         execa(path.join('.', 'node_modules', '.bin', 'jest'), { stdio: 'inherit' }).then(
           () => {
-            removeTestFiles()
+            execa(path.join('.', 'node_modules', '.bin', 'rollup -c'), { stdio: 'inherit' }).then(
+              () => {
+                execa(path.join('.', 'node_modules', '.bin', 'rollup -c rollup.config.split.js'), { stdio: 'inherit' }).then(
+                  () => {
+                    removeTestFiles()
+                  },
+                  () => {
+                    removeTestFiles()
+                  }
+                )
+              },
+              () => {
+                removeTestFiles()
+              }
+            )
           },
           () => {
             removeTestFiles()
